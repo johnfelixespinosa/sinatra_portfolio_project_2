@@ -6,7 +6,7 @@ describe "USER MODEL" do
       :first_name => "John",
       :last_name => "Espinosa",
       :email => "johnespinosa@gmail.com",
-      :password_digest => "password")
+      :password => "password")
     end
     
     it "has a username, first name, last name, and email" do
@@ -14,11 +14,19 @@ describe "USER MODEL" do
       expect @user.first_name = "John"
       expect @user.last_name = "Espinosa"
       expect @user.email = "johnespinosa@gmail.com"
-
     end
 
     it "can slugify its name" do
       expect(@user.slug).to eq("studenttest")
+    end
+
+    it 'can find a user based on the slug' do
+      slug = @user.slug
+      expect(User.find_by_slug(slug).username).to eq("studenttest")
+    end
+  
+    it 'has a secure password' do
+      expect(@user.authenticate("password")).to be_truthy
     end
 
 
