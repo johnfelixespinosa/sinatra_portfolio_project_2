@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "User" do
+describe "USER MODEL" do
   before do 
     @user = User.create(:username => "studenttest", 
       :first_name => "John",
