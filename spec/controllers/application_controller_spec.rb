@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ApplicationController' do
+describe 'APPLICATION_CONTROLLER' do
 
   describe "Homepage" do
     it 'loads the homepage' do

@@ -1,33 +1,19 @@
 <!doctype html>
 <html lang="en">
-<title>Signup - Imagine Online Community College</title>
+<title>Login - Imagine Online Community College</title>
 
 <body>
 <div class="card mx-auto" style="width:45%;">
-  <div class="card-header"><h4> Signup</h4>
+  <div class="card-header"><h4>Login</h4>
   </div>
 
   <div class="card-body">
-    <form class="form-center" action="/signup" method="POST">
+    <form class="form-center" action="/login" method="POST">
             
       <label for="username">Username</label>
         <input type="username" class="form-control" id="username" aria-describedby="usernamehelp" placeholder="Enter username" name="username">
           <small id="usernamehelp" class="form-text text-muted">Must be minimum 8 characters</small><br>
-
-      <label for="first_name">First Name</label>
-        <input type="first_name" class="form-control" id="first_name"placeholder="Enter First Name" name="first_name"><br>
-
-      <label for="last_name">Last Name</label>
-        <input type="last_name" class="form-control" id="last_name"placeholder="Enter Last Name" name="last_name"><br>
-      
-      <label for="usertype">Account Type</label><br>
-        
-        <input type="radio" id="instructor" name="usertype" value="instructor">
-        <label for="instructor">Instructor</label><br>
-      
-        <input type="radio" id="student" name="usertype" value="student">
-        <label for="student">Student</label><br><br>
-      
+     
       <label for="email">Email</label>
         <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
           <small id="emailhelp" class="form-text text-muted">instructors please use @iocc.staff.edu emails</small><br>
