@@ -9,8 +9,12 @@ describe "User" do
       :password_digest => "password")
     end
     
-    it "has a username" do
+    it "has a username, first name, last name, and email" do
       expect @user.username = "studenttest"
+      expect @user.first_name = "John"
+      expect @user.last_name = "Espinosa"
+      expect @user.email = "johnespinosa@gmail.com"
+
     end
 
     it "can slugify its name" do
