@@ -23,6 +23,7 @@ class UsersController < ApplicationController
         :last_name => params[:last_name],
         :email => params[:email],
         :password => params[:password],
+        :usertype => params[:usertype]
         )
        @user.save
     if @user.save

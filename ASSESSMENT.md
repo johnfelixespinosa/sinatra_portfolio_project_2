@@ -30,6 +30,7 @@ Upon user creation has_secure_password sets the password attribute to read only,
 This makes it so passwords will be saved in the database as the encrypted password. Hackers will have to use brute force to gain access. 
 
 - Review sessions. Why do we set session[:user_id]?
+To save data over multiple requests. A session keeps track of everything a user does prior to closing the browser.
 
 - Look into using Enrollments as a join table. Remember that you can specify the class you'll be referencing: http://edgeguides.rubyonrails.org/association_basics.html#options-for-belongs-to-class-name
 - If you're having trouble, don't hesitate to schedule a 1:1 with Howard! https://theflatironschool.typeform.com/to/Xva2Br

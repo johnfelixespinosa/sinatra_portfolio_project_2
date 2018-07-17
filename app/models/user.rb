@@ -6,8 +6,14 @@ class User < ActiveRecord::Base
   validates :email, presence: true, format: { with: 
     /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i}
   validates :password, length: { minimum: 6}, allow_nil: true
+  enum usertype: [:student, :instructor]
+  after_initialize :set_default_usertype, :if => :new_record?
 
   #has_secure_password checks for existence of password and does confirmation
+
+  def set_default_usertype
+    self.usertype ||= :student
+  end
 
   def slug
     username.downcase.gsub(" ","-")
