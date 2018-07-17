@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/flash'
 class UsersController < ApplicationController
+  register Sinatra::Flash
 
   get '/signup' do
     erb :'/users/signup'
@@ -12,34 +13,11 @@ class UsersController < ApplicationController
 
   get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
-    erb :'users/show'
+    erb :'users/home'
   end  
 
   post '/signup' do
-    if params.has_value?("")
-       redirect to '/signup'
-    # elsif
-    #    username_exists?(params[:username])
-    #    flash[:message] = "Username exists, try logging in."
-    #    redirect to '/login'
-    elsif
-       params[:username].length < 8
-       flash[:message] = "Username to short"
-       redirect to '/signup'
-    # elsif
-    #    email_exists?(params[:email])
-    #    flash[:message] = "Email already in use, please try again."
-    #    redirect to '/signup'
-    elsif
-       params[:password].size < 8
-       flash[:message] = "Password to short"
-       redirect to '/signup'
-    # elsif
-    #    params[:usertype] == "instructor" && !email_has_iocc_staff_edu?(params[:email])
-    #    flash[:message] = "IOCC instructors please use your @iocc.staff.edu email"
-    #    redirect to '/signup'
-    else
-       @user = User.new(
+    @user = User.new(
         :username => params[:username],
         :first_name => params[:first_name],
         :last_name => params[:last_name],
@@ -47,10 +25,20 @@ class UsersController < ApplicationController
         :password => params[:password],
         )
        @user.save
-       session[:user_id] = @user.id
-       
-       redirect to ("/users/#{current_user.slug}")
-     end
+
+    if @user.save
+      session[:user_id] = @user.id
+      flash[:message] = "Signup Successful"
+      redirect to ("/users/#{current_user.slug}")
+    else
+      flash[:message] = @user.errors.full_messages
+      redirect to '/signup'
+    end
   end
+
+
+      
+  
+       
 
 end
