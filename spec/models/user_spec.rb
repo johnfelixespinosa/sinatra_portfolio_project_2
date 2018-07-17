@@ -16,6 +16,16 @@ describe "USER MODEL" do
       expect @user.email = "johnespinosa@gmail.com"
     end
 
+    it "should not be valid with a short password" do
+      @user.password = 'short'
+      expect(@user.valid?).to eq(false)
+    end
+
+    it "should not be valid with an improper email" do
+      @user.email = 'notvalid.com'
+      expect(@user.valid?).to eq(false)
+    end
+
     it "can slugify its name" do
       expect(@user.slug).to eq("studenttest")
     end
@@ -27,6 +37,15 @@ describe "USER MODEL" do
   
     it 'has a secure password' do
       expect(@user.authenticate("password")).to be_truthy
+    end
+
+    it 'two users cannot have the same username' do
+      @user2 = User.create(:username => "studenttest", 
+        :first_name => "John",
+        :last_name => "Espinosa",
+        :email => "johnespinosa@gmail.com",
+        :password => "password")
+      expect(@user2.valid?).to eq(false)
     end
 
 
