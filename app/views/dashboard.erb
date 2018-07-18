@@ -1,0 +1,35 @@
+<% content_for :instructor do %>
+        <div class="card-body">
+          <div class="card text-center">
+            <h5 class="card-header">Instructor Dashboard</h5>
+              <div class="card-body">
+                <h5 class="card-title">Teach a new course</h5>
+                <p class="card-text">Empowering students with high quality instruction</p>
+                <a href="/courses/new_course" class="btn btn-primary">Add Course</a>
+              </div>
+          </div><br>
+        
+          <div class="card-body">
+            <div class="card text-center">
+              <h5 class="card-header">Courses You're Teaching</h5>
+            </div>
+<% end %>
+
+<% content_for :student do %>
+        <div class="card-body">
+          <div class="card text-center">
+            <h5 class="card-header">Student Dashboard</h5>
+              <div class="card-body">
+                <h5 class="card-title">Enroll in a new course</h5>
+                <p class="card-text">Find the course that is right for you</p>
+                <a href="/courses/courses" class="btn btn-primary">Search Courses</a>
+              </div>
+          </div><br>
+
+
+        
+          <div class="card-body">
+            <div class="card text-center">
+              <h5 class="card-header">Courses You're Enrolled in</h5>
+            </div>
+<% end %>

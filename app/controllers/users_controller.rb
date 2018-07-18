@@ -1,7 +1,11 @@
+require 'pry'
 require 'sinatra'
 require 'sinatra/flash'
+require 'sinatra/content_for'
 class UsersController < ApplicationController
   register Sinatra::Flash
+  helpers Sinatra::ContentFor
+
 
   get '/signup' do
     erb :'/users/signup'
@@ -11,9 +15,25 @@ class UsersController < ApplicationController
     erb :'/users/login'
   end
 
+  post '/login' do
+    @user = User.find_by(:username => params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      
+      flash[:message] = "Successfully Logged In"
+      redirect to ("/users/#{current_user.slug}")
+    else
+      flash[:message] = "Account Not Found, Please Signup"
+
+      redirect to '/signup'
+    end
+  end
+
   get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
-    erb :'users/home'
+    erb :'users/home', :layout => :layout do
+      erb :dashboard
+    end
   end  
 
   post '/signup' do
@@ -26,25 +46,22 @@ class UsersController < ApplicationController
         :usertype => params[:usertype]
         )
        @user.save
+
     if @user.save
       session[:user_id] = @user.id
       flash[:message] = "Signup Successful"
       redirect to ("/users/#{current_user.slug}")
+      # params.inspect 
     else
       flash[:message] = @user.errors.full_messages
       redirect to '/signup'
     end
   end
 
-  post '/login' do
-    @user = User.find_by(:username => params[:username])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      flash[:message] = "Successfully Logged In"
-      redirect to ("/users/#{current_user.slug}")
-    else
-      flash[:message] = "Account Not Found, Please Signup"
-      redirect to '/signup'
+  get '/logout' do
+    if logged_in?
+      session.destroy
+      redirect to '/'
     end
   end
 

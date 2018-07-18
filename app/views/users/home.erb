@@ -1,1 +1,32 @@
-<h1>User home page</h2>
+<!doctype html>
+<html lang="en">
+<title>Dashboard - Imagine Online Community College</title>
+
+<body>
+
+<br>
+<div class="card mx-auto" style="width:45%;">
+  <div class="card-header text-left"><h4> Welcome, <%= current_user.first_name %> <%= current_user.last_name %></h4>
+
+    <ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="text">Logged in as <%= current_user.username %>
+  </li>
+    </ul>
+    <ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="text">Account type: <strong><%= current_user.usertype %></strong></a>
+  </li>
+    </ul>
+  
+    <%= yield %>
+      <% if !is_a_student? %>
+        <%= yield_content :instructor %>
+      <% else %>
+        <%= yield_content :student %>
+    <% end %>
+
+
+
+</body>
+</html>
