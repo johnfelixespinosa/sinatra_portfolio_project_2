@@ -19,12 +19,10 @@ class UsersController < ApplicationController
     @user = User.find_by(:username => params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      
       flash[:message] = "Successfully Logged In"
       redirect to ("/users/#{current_user.slug}")
     else
       flash[:message] = "Account Not Found, Please Signup"
-
       redirect to '/signup'
     end
   end
@@ -37,7 +35,7 @@ class UsersController < ApplicationController
   end  
 
   post '/signup' do
-    @user = User.new(
+    @user = User.create(
         :username => params[:username],
         :first_name => params[:first_name],
         :last_name => params[:last_name],
@@ -45,8 +43,6 @@ class UsersController < ApplicationController
         :password => params[:password],
         :usertype => params[:usertype]
         )
-       @user.save
-
     if @user.save
       session[:user_id] = @user.id
       flash[:message] = "Signup Successful"

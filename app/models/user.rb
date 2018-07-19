@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
   enum usertype: [:student, :instructor]
   after_initialize :set_default_usertype, :if => :new_record?
 
+  has_many :course_instructor_relationships
+  has_many :courses, through: :course_instructor_relationships
+
+
   #has_secure_password checks for existence of password and does confirmation
 
   def set_default_usertype

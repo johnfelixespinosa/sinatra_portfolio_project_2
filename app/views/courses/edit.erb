@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<title>Edit a course - Imagine Online Community College</title>
+
+<body>
+
+<br>
+<div class="card mx-auto" style="width:45%;">
+  <div class="card-header text-left"><h4> Welcome, <%= current_user.first_name %> <%= current_user.last_name %></h4>
+
+    <ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="text">Logged in as <%= current_user.username %>
+  </li>
+    </ul>
+    <ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="text">Account type: <strong><%= current_user.usertype.upcase %></strong></a>
+  </li>
+    </ul>
+
+    <% if !!flash[:message] %>
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <div class="card-body">
+      
+      <div class="card text-center">
+        <h5 class="card-header">Edit a Course</h5>
+
+          <div class="card-body text-left">
+            <h5 class="card-title text-left">Course Details</h5>
+
+              <form action="/courses/<%= @course.id %>" method="POST">
+                <input type="hidden" id="hidden" name="_method" value="PATCH">
+                <label for="name">Course Name:</label>
+                <input type="text" id="name" class="form-control" name="name" value="<%= @course.name %>"> </input>
+
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" rows="3" value="<%= @course.description %>" name="description" placeholder="<%= @course.description %>"></textarea><br>
+
+                <div class="form-group">
+                  <label for="credits">Credits Offered</label>
+                  <select class="form-control" id="credits" value="<%= @course.credits%>" name="credits">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+
+                <br>
+                <button type="submit" class="btn btn-success float-right" value="submit">Submit</button>
+                <a href="/users/<%= current_user.slug %>" class="btn btn-light btn-sm float-left">Return</a>
+
+              </form>  
+          </div>
+      </div>
+</body>
+</html>
