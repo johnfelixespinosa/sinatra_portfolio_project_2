@@ -10,6 +10,6 @@ class Course < ActiveRecord::Base
   end
 
   def self.find_by_slug(slug)
-    Course.all.find{|user| user.slug == slug}
+    Course.all.find{|course| course.slug == slug}
   end
 end

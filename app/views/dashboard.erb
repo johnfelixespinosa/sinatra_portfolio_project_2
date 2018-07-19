@@ -35,7 +35,7 @@
                 <input class="btn btn-danger btn-sm float-left" type="submit" value="Cancel this course">
                 </form>
 
-                <a href="/courses/<%= current_user.slug %>/<%= c1.id %>/edit" class="btn btn-dark btn-sm float-right">Edit</a>
+                <a href="/courses/<%= current_user.slug %>/<%= c1.slug %>/edit" class="btn btn-dark btn-sm float-right">Edit</a>
 
                 </div>
             
@@ -54,7 +54,7 @@
                 <input class="btn btn-danger btn-sm float-left" type="submit" value="Cancel this course">
                 </form>
 
-                <a href="/courses/<%= current_user.slug %>/<%= c2.id %>/edit" class="btn btn-dark btn-sm float-right">Edit</a>
+                <a href="/courses/<%= current_user.slug %>/<%= c2.slug %>/edit" class="btn btn-dark btn-sm float-right">Edit</a>
 
               
                 </div>
@@ -79,7 +79,7 @@
               <div class="card-body">
                 <h5 class="card-title">Enroll in a new course</h5>
                 <p class="card-text">Find the course that is right for you</p>
-                <a href="/courses/courses" class="btn btn-primary">Search Courses</a>
+                <a href="/courses/search" class="btn btn-primary">Search Courses</a>
               </div>
           </div><br>
 

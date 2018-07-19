@@ -2,6 +2,11 @@ require 'rack-flash'
 class CoursesController < ApplicationController
   use Rack::Flash
 
+  get '/courses/search' do
+    @user = User.find_by_slug(params[:slug])
+    erb :'courses/search'
+  end
+
   get '/courses/new' do 
     if !unauthorized?
       erb :'courses/new'
@@ -34,18 +39,18 @@ class CoursesController < ApplicationController
     end
   end
 
-  get '/courses/:slug/:id/edit' do
+  get '/courses/:slug/:slug/edit' do
     redirect_to_login if unauthorized?
       
-    @course = Course.find_by_id(params[:id])
+    @course = Course.find_by_slug(params[:slug])
     erb :'courses/edit'
   end
 
-  patch '/courses/:id' do #update post
+  patch '/courses/:slug' do #update post
     redirect_to_login if unauthorized?
     redirect_to_edit if missing_inputs?
 
-    @course = Course.find_by_id(params[:id])
+    @course = Course.find_by_slug(params[:slug])
     @course.update(
       name:        params[:name],
       description: params[:description],
@@ -61,16 +66,26 @@ class CoursesController < ApplicationController
   end
 
   delete '/courses/:slug/:id/delete' do
-    if logged_in?
-      @course = Course.find_by_id(params[:id])
-        if @course && @course.user == current_user
-          @course.delete
-        end
-        redirect to ('/users/#{current_user.slug}')
-      else
-        redirect to '/login'
-      end
+    redirect_to_login if unauthorized?
+    
+    @course = Course.find_by_id(params[:id])
+    if @course && @course.user == current_user
+      @course.delete
+      redirect to "/users/#{current_user.slug}"
+    else
+      redirect to '/login'
     end
+  end
+
+  get '/courses/:slug/info' do
+    redirect_to_login if unauthorized?
+      @course = Course.find_by_slug(params[:slug])
+      @description = @course.description
+      @instructor = @course.instructor
+      @name = @course.name
+      @credits = @course.credits
+      erb :'courses/info'
+  end
 
     private
 
@@ -83,7 +98,7 @@ class CoursesController < ApplicationController
     end
 
     def redirect_to_edit
-      redirect to "/courses/#{current_user.slug}/#{@course.id}/edit"
+      redirect to "/courses/#{current_user.slug}/#{@course.slug}/edit"
     end
 
     def unauthorized?

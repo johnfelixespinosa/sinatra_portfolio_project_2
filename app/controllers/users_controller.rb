@@ -6,21 +6,16 @@ class UsersController < ApplicationController
   register Sinatra::Flash
   helpers Sinatra::ContentFor
 
-
-  get '/signup' do
-    erb :'/users/signup'
-  end
-
   get '/login' do
     erb :'/users/login'
   end
 
   post '/login' do
-    @user = User.find_by(:username => params[:username])
+    @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       flash[:message] = "Successfully Logged In"
-      redirect to ("/users/#{current_user.slug}")
+      redirect to "/users/#{current_user.slug}"
     else
       flash[:message] = "Account Not Found, Please Signup"
       redirect to '/signup'
@@ -34,23 +29,27 @@ class UsersController < ApplicationController
     end
   end  
 
+  get '/signup' do
+    erb :'/users/signup'
+  end
+
   post '/signup' do
+    redirect_to_signup if missing_inputs?
     @user = User.create(
-        :username => params[:username],
-        :first_name => params[:first_name],
-        :last_name => params[:last_name],
-        :email => params[:email],
-        :password => params[:password],
-        :usertype => params[:usertype]
-        )
+      username:   params[:username],
+      first_name: params[:first_name],
+      last_name:  params[:last_name],
+      email:      params[:email],
+      password:   params[:password],
+      usertype:   params[:usertype]
+    )
     if @user.save
       session[:user_id] = @user.id
       flash[:message] = "Signup Successful"
-      redirect to ("/users/#{current_user.slug}")
-      # params.inspect 
+      redirect to "/users/#{current_user.slug}"
     else
       flash[:message] = @user.errors.full_messages
-      redirect to '/signup'
+      redirect_to_signup
     end
   end
 
@@ -61,8 +60,14 @@ class UsersController < ApplicationController
     end
   end
 
-      
-  
-       
+  private
+
+  def redirect_to_signup
+    redirect to '/signup'
+  end
+
+  def missing_inputs?
+    params.any?(&:blank?)
+  end
 
 end
