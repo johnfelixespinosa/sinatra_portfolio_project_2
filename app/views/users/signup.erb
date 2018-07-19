@@ -7,6 +7,13 @@
   <div class="card-header"><h4> Signup</h4>
   </div>
 
+  <% if !!flash[:message] %>
+    <div class="alert alert-dismissible alert-info">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
 
 
   <div class="card-body">

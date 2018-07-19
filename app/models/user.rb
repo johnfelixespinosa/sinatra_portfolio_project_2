@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     self.usertype ||= :student
   end
 
+  def full_name
+    [first_name, last_name].join(' ')
+  end
+
   def slug
     username.downcase.gsub(" ","-")
   end

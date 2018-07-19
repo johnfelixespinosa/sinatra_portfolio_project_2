@@ -1,4 +1,11 @@
 <% content_for :instructor do %>
+ <% if !!flash[:message] %>
+    <div class="alert alert-dismissible alert-info">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
         <div class="card-body">
           <div class="card text-center">
             <h5 class="card-header">Instructor Dashboard</h5>
@@ -60,6 +67,12 @@
 <% end %>
 
 <% content_for :student do %>
+  <% if !!flash[:message] %>
+    <div class="alert alert-dismissible alert-info">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <%= flash[:message] %>
+    </div>
+  <% end %>
         <div class="card-body">
           <div class="card text-center">
             <h5 class="card-header">Student Dashboard</h5>
