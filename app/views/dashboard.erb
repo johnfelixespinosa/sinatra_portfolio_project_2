@@ -30,7 +30,7 @@
               </div>
                 <div class="card-footer">
 
-                <form method="post" action="/courses/<%= current_user.slug %>/<%= c1.id %>/delete">
+                <form method="post" action="/courses/<%= current_user.slug %>/<%= c1.slug %>/delete">
                 <input id="hidden" type="hidden" name="_method" value="DELETE">
                 <input class="btn btn-danger btn-sm float-left" type="submit" value="Cancel this course">
                 </form>
@@ -49,7 +49,7 @@
               </div>
                 <div class="card-footer">
 
-                <form method="post" action="/courses/<%= current_user.slug %>/<%= c2.id %>/delete">
+                <form method="post" action="/courses/<%= current_user.slug %>/<%= c2.slug %>/delete">
                 <input id="hidden" type="hidden" name="_method" value="DELETE">
                 <input class="btn btn-danger btn-sm float-left" type="submit" value="Cancel this course">
                 </form>

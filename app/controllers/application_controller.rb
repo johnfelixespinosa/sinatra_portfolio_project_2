@@ -27,9 +27,6 @@ class ApplicationController <Sinatra::Base
       @current_user.student?
     end
 
-    def current_course
-      @current_course ||= CourseInstructorRelationship.find_by(user_id: session[:user_id], course_id: @course.id )
-    end
   end
 
 end
