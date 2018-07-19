@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
 
     @course = Course.create(
       name:        params[:name],
-      instructor:  current_user.full_name,
+      instructor:  current_user,
       description: params[:description],
       credits:     params[:credits] 
     )
@@ -26,10 +26,11 @@ class CoursesController < ApplicationController
       course_id: @course.id,
       user_id:   current_user.id
     )
+    @relationship.save
 
     if @course.save
       flash[:message] = "Course Added"
-      redirect_to_home
+      redirect to "/users/#{current_user.slug}"
     else
       flash[:message] = "Unable to add course"
       redirect to "/courses/new"
@@ -81,7 +82,6 @@ class CoursesController < ApplicationController
     erb :'courses/search'
   end
 
-
   get '/courses/:slug/info' do
     redirect_to_login if unauthorized?
     find_current_course if is_a_student?
@@ -105,8 +105,18 @@ class CoursesController < ApplicationController
       @enroll.save
       #flash[:message] = "Enrolled in Course"
       redirect_to_home
-      end
-    end
+  end
+
+  delete '/courses/:slug/:slug/withdraw' do
+    redirect_to_login if unauthorized?
+    
+    @course = Course.find_by_slug(params[:slug])
+    @enrollment = CourseStudentEnrollment.find_by(
+      course_id: @course.id,
+      user_id: current_user.id
+    )
+      @enrollment.delete
+      redirect_to_home
   end
 
     private
@@ -133,10 +143,6 @@ class CoursesController < ApplicationController
 
     def find_current_course
       @course = Course.find_by_slug(params[:slug])
-    end
-
-    def missing_inputs?
-      params.any?(&:blank?)
     end
 
 end

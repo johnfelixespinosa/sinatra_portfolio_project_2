@@ -27,6 +27,16 @@ class ApplicationController <Sinatra::Base
       @current_user.student?
     end
 
-  end
+    def already_enrolled?
+      current_user.courses.find_by_slug(@course.slug)
+    end
 
+    def missing_inputs?
+      params.any?(&:blank?)
+    end
+
+    def redirect_to_home
+      redirect to "/users/#{current_user.slug}"
+    end
+  end
 end

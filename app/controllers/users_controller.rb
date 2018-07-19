@@ -15,10 +15,10 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       flash[:message] = "Successfully Logged In"
-      redirect to "/users/#{current_user.slug}"
+      redirect_to_home
     else
       flash[:message] = "Account Not Found, Please Signup"
-      redirect to '/signup'
+      redirect_to_signup
     end
   end
 
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:message] = "Signup Successful"
-      redirect to "/users/#{current_user.slug}"
+      redirect_to_home
     else
       flash[:message] = @user.errors.full_messages
       redirect_to_signup
@@ -64,10 +64,6 @@ class UsersController < ApplicationController
 
   def redirect_to_signup
     redirect to '/signup'
-  end
-
-  def missing_inputs?
-    params.any?(&:blank?)
   end
 
 end

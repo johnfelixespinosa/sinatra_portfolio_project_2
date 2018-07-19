@@ -1,5 +1,5 @@
-class CourseInstructorRelationship <ActiveRecord::Base
-  belongs_to :instructor
+class CourseStudentEnrollment <ActiveRecord::Base
+  belongs_to :student
   belongs_to :course
 
   def slug

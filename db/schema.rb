@@ -11,9 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180718205806) do
+ActiveRecord::Schema.define(version: 20180719193531) do
 
   create_table "course_instructor_relationships", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "user_id"
+  end
+
+  create_table "course_student_enrollments", force: :cascade do |t|
     t.integer "course_id"
     t.integer "user_id"
   end
