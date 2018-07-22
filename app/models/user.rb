@@ -9,12 +9,11 @@ class User < ActiveRecord::Base
   enum usertype: [:student, :instructor]
   after_initialize :set_default_usertype, :if => :new_record?
 
-  has_many :course_instructor_relationships
+  has_many :course_instructor_relationships 
+  has_many :courses, through: :course_instructor_relationships
+
   has_many :course_student_enrollments
-
-  has_many :taught_courses, :through => :course_instructor_relationships, :class_name => 'Course'
-  has_many :enrolled_courses, :through => :course_student_enrollments, :class_name => 'Course'
-
+  has_many :courses, through: :course_student_enrollments
 
   #has_secure_password checks for existence of password and does confirmation
 

@@ -31,6 +31,10 @@ class ApplicationController <Sinatra::Base
       current_user.courses.find_by_slug(@course.slug)
     end
 
+    def match_relationship_to_course
+      @course = Course.find_by(id: course.id)
+    end
+
     def missing_inputs?
       params.any?(&:blank?)
     end

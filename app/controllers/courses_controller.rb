@@ -18,7 +18,7 @@ class CoursesController < ApplicationController
 
     @course = Course.create(
       name:        params[:name],
-      instructor:  current_user,
+      instructor:  current_user.full_name,
       description: params[:description],
       credits:     params[:credits] 
     )
@@ -67,12 +67,13 @@ class CoursesController < ApplicationController
     redirect_to_login if unauthorized?
     
     @course = Course.find_by_slug(params[:slug])
-    if @course && @course.user == current_user
+    @instruction = CourseInstructorRelationship.find_by(
+      course_id: @course.id,
+      user_id: current_user.id
+    )
+      @instruction.delete
       @course.delete
       redirect_to_home
-    else
-      redirect to '/login'
-    end
   end
 
   ##########STUDENT USER ROUTES##########
