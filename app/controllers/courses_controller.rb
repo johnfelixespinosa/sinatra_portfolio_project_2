@@ -41,6 +41,7 @@ class CoursesController < ApplicationController
     redirect_to_login if unauthorized?
       
     @course = Course.find_by_slug(params[:slug])
+    redirect_to_login if not_course_instructor
     erb :'courses/edit'
   end
 
@@ -48,7 +49,9 @@ class CoursesController < ApplicationController
     redirect_to_login if unauthorized?
     redirect_to_edit if missing_inputs?
 
+
     @course = Course.find_by_slug(params[:slug])
+    redirect_to_login if not_course_instructor
     @course.update(
       name:        params[:name],
       description: params[:description],
@@ -67,6 +70,7 @@ class CoursesController < ApplicationController
     redirect_to_login if unauthorized?
     
     @course = Course.find_by_slug(params[:slug])
+    redirect_to_login if not_course_instructor
     @instruction = CourseInstructorRelationship.find_by(
       course_id: @course.id,
       user_id: current_user.id
@@ -79,6 +83,7 @@ class CoursesController < ApplicationController
   ##########STUDENT USER ROUTES##########
 
   get '/courses/search' do
+    redirect_to_login if unauthorized?
     @user = User.find_by_slug(params[:slug])
     erb :'courses/search'
   end
@@ -136,6 +141,10 @@ class CoursesController < ApplicationController
 
     def redirect_to_edit
       redirect to "/courses/#{current_user.slug}/#{@course.slug}/edit"
+    end
+
+    def not_course_instructor
+      current_user.full_name != @course.instructor
     end
 
     def unauthorized?

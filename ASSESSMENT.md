@@ -6,9 +6,15 @@ Nice job on your portfolio project review! I'm excited to meet again and discuss
 
 ## 1.  Comb over your routes to make sure you are using RESTful conventions where appropriate. A good reference for this lives here: https://learn.co/tracks/full-stack-web-development-v5/sinatra/activerecord/sinatra-restful-routes
 
-I believe my routes are ok with the setup of the application. I know that it is good practice to have the views doing as little of the logic as possible, but currently my views such as the user/show page will show only the content based on the current_user usertype. Students can only see student content and instructors can only see instructor content. If I was to have to controllers and split the user model into two models then I could take the logic out of the view and split them into separate views per user model. 
+What I did to change my routes to be more RESTFUL, is when a user is logged in form now on, and whether they are a student or instructor, anytime the wish to view a course, whether it be to display the course info as a student, or edit the course info as an instructor. The course slug is used in the route. As an instructor who wishes to edit their course the route will be displayed as 
+http://127.0.0.1:9393/courses/danielkehoe/programming-and-problem-solving/edit
 
-Dependant on the usertype the view will dictate whether a user can access the enroll or CRUD course features. 
+As a student who wishes to receive more info about a course the url will be displayed as
+http://127.0.0.1:9393/courses/programming-and-problem-solving/info
+
+Previously the route to show all courses was courses/courses
+This proved to be confusing for both user models
+I changed this route to be 'courses/search' for students and this route is not available for instructors as they don't have the need to view all courses, rather only their courses. 
 
 ## 2. Review has_secure_password. Focus on the methods it provides and what they do for us and our apps.
 
@@ -34,7 +40,30 @@ This makes it so passwords will be saved in the database as the encrypted passwo
 ## 3. Review sessions. Why do we set session[:user_id]?
 To save data over multiple requests. A session keeps track of everything a user does prior to closing the browser.
 
+This is so that a user while browsing the site is in an active session. Upon a user logging in, the login post route does the following
+
+      session[:user_id] = @user.id 
+
+We then do a validation throughout the application defined in the current_user method
+
+  ```ruby
+  def current_user
+      @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+  ```
+
+Anytime a user wishes to do anything that alters the database such as create a course when as an instructor, it is referenced to that user using the session_id. A student logging in under one session, couldnt navigate to the edit page of a course for example, and then edit that courses info, for the check of whether the current user is the owner of that course would fail, prompting that session user(the student) to be redirected to the login page. 
+
+  ```ruby
+    def not_course_instructor
+      current_user.full_name != @course.instructor
+    end 
+  ```
+
+
 ## 4. Look into using Enrollments as a join table. Remember that you can specify the class you'll be referencing: http://edgeguides.rubyonrails.org/association_basics.html#options-for-belongs-to-class-name
+
+With this iteration, I used the instructor relationship and the student enrollment relationship both as separate join tables
 
 ## 5. If you're having trouble, don't hesitate to schedule a 1:1 with Howard! https://theflatironschool.typeform.com/to/Xva2Br
 
