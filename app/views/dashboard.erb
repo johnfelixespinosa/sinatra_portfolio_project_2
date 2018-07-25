@@ -21,6 +21,7 @@
               <h5 class="card-header">Courses You're Teaching</h5>
             </div>
            <% current_user.course_instructor_relationships.each do |x| %>
+       
            <% @course = Course.find_by_id(x.course_id) %>
 
           

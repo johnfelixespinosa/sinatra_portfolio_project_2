@@ -28,7 +28,7 @@ class ApplicationController <Sinatra::Base
     end
 
     def already_enrolled?
-      current_user.courses.find_by_slug(@course.slug)
+      current_user.course_student_enrollments.find { |enrollment| enrollment.course_id == @course.id}
     end
 
     def match_relationship_to_course

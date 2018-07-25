@@ -10,10 +10,10 @@ class User < ActiveRecord::Base
   after_initialize :set_default_usertype, :if => :new_record?
 
   has_many :course_instructor_relationships 
-  has_many :courses, through: :course_instructor_relationships
+  has_many :instructor_courses, through: :course_instructor_relationships, class_name: "Course", foreign_key: "course_id"
 
   has_many :course_student_enrollments
-  has_many :courses, through: :course_student_enrollments
+  has_many :student_courses, through: :course_student_enrollments, class_name: "Course", foreign_key: "course_id"
 
   #has_secure_password checks for existence of password and does confirmation
 
@@ -32,6 +32,5 @@ class User < ActiveRecord::Base
   def self.find_by_slug(slug)
     User.all.find{|user| user.slug == slug}
   end
-
 
 end

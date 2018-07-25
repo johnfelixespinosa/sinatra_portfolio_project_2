@@ -1,4 +1,5 @@
 # Assessment
+CREATE TWO SEPARATE MODELS USER/INSTRUCTOR for join tables
 
 Hi John,
 
@@ -6,7 +7,7 @@ Nice job on your portfolio project review! I'm excited to meet again and discuss
 
 ## 1.  Comb over your routes to make sure you are using RESTful conventions where appropriate. A good reference for this lives here: https://learn.co/tracks/full-stack-web-development-v5/sinatra/activerecord/sinatra-restful-routes
 
-What I did to change my routes to be more RESTFUL, is when a user is logged in form now on, and whether they are a student or instructor, anytime the wish to view a course, whether it be to display the course info as a student, or edit the course info as an instructor. The course slug is used in the route. As an instructor who wishes to edit their course the route will be displayed as 
+What I did to change my routes to be more RESTFUL, is when a user is logged in from now on, and whether they are a student or instructor, anytime they wish to view a course, whether it be to display the course info as a student, or edit the course info as an instructor. The course slug is used in the route. As an instructor who wishes to edit their course the route will be displayed as 
 http://127.0.0.1:9393/courses/danielkehoe/programming-and-problem-solving/edit
 
 As a student who wishes to receive more info about a course the url will be displayed as

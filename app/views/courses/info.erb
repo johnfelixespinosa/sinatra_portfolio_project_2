@@ -41,10 +41,12 @@
                 <small class="text-muted float-left"><%= @credits %> credits</small><br><br>
 
                 <% if already_enrolled? %>
+                
                 <a href="/courses/search" class="btn btn-success btn-sm float-right">Return to courses</a>
                 <% else %>
                 <a href="/courses/<%= @course.slug %>/enroll" class="btn btn-success btn-sm float-right">Enroll</a>
                 <% end %>
+                
               </form>  
           </div>
       </div>
