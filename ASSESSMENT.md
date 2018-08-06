@@ -66,15 +66,6 @@ Anytime a user wishes to do anything that alters the database such as create a c
 
 With this iteration, I used the instructor relationship and the student enrollment relationship both as separate join tables
 
-## 5. If you're having trouble, don't hesitate to schedule a 1:1 with Howard! https://theflatironschool.typeform.com/to/Xva2Br
-
-When you've finished, you can use this link to schedule another appointment: https://meetme.so/SinatraLearnAssessment
-Please reach out if you have any questions or concerns.
-
-Regards,
-
-Luisa Scavo 
-luisa@flatironschool.com
 
 User can be either Instructor or student
 
